@@ -1,13 +1,14 @@
 import 'server-only';
 import { createServerClient as creerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { exigerConfigSupabase } from './config';
+import { SCHEMA, exigerConfigSupabase } from './config';
 
 /** Client Supabase côté serveur, lié aux cookies de la requête (RLS appliquée). */
 export async function createServerClient() {
   const { url, cle } = exigerConfigSupabase();
   const pot = await cookies();
   return creerClient(url, cle, {
+    db: { schema: SCHEMA },
     cookies: {
       getAll: () => pot.getAll(),
       setAll(liste) {

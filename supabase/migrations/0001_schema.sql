@@ -1,5 +1,9 @@
 -- Seetlu — schéma de la phase 1 (socle de prospection).
 -- Tout ce qui appartient à un client porte un workspace_id (multi-clients dès le départ).
+-- Seetlu vit dans son propre schéma : il peut cohabiter avec une autre app dans le même projet Supabase.
+
+create schema if not exists seetlu;
+set search_path to seetlu, public;
 
 create type prospect_statut as enum (
   'a_contacter', 'contacte', 'a_repondu', 'demo', 'client', 'perdu', 'ne_plus_contacter'

@@ -1,3 +1,9 @@
+/**
+ * Toutes les tables de Seetlu vivent dans le schéma « seetlu » : l'app peut partager un projet
+ * Supabase avec une autre sans mélanger les tables.
+ */
+export const SCHEMA = 'seetlu' as const;
+
 /** Adresse et clé publique du projet Supabase, ou null tant que .env.local n'est pas rempli. */
 export function configSupabase(): { url: string; cle: string } | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

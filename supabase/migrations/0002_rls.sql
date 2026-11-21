@@ -1,18 +1,20 @@
 -- Seetlu — règles d'accès : chacun ne voit que les espaces dont il est membre.
 
+set search_path to seetlu, public;
+
 create function is_member(ws uuid) returns boolean
-language sql stable security definer set search_path = public as $$
+language sql stable security definer set search_path = seetlu, public as $$
   select exists (select 1 from members where workspace_id = ws and user_id = auth.uid());
 $$;
 
 -- Crée « Mon espace » à la première connexion et renvoie l'espace de l'utilisateur.
 create function ensure_workspace() returns uuid
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = seetlu, public as $$
 declare
   ws uuid;
 begin
   if auth.uid() is null then
-    raise exception 'non connecté';
+    raise exception 'non connecte';
   end if;
   select workspace_id into ws from members where user_id = auth.uid() order by workspace_id limit 1;
   if ws is null then
@@ -36,7 +38,7 @@ create policy "membres lisent leur espace" on workspaces
 create policy "membres renomment leur espace" on workspaces
   for update to authenticated using (is_member(id)) with check (is_member(id));
 
-create policy "chacun voit ses adhésions" on members
+create policy "chacun voit ses adhesions" on members
   for select to authenticated using (user_id = auth.uid());
 
 -- Toutes les tables de travail : accès réservé aux membres de l'espace.
