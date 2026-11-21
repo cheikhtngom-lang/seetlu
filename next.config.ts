@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // La racine mène à l'application ; la future landing page (phase 4) prendra sa place.
+  async redirects() {
+    return [{ source: "/", destination: "/app", permanent: false }];
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

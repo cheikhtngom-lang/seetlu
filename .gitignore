@@ -43,3 +43,6 @@ next-env.d.ts
 
 # exécution des plans (ledger)
 .superpowers/
+
+# maquettes de décision impeccable (temporaires)
+.impeccable/mocks/

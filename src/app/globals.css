@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Seetlu — Indigo de Thiès.
+ * Le score se lit comme une teinture : trois bains d'indigo portent la priorité.
+ * L'ocre est réservée à la sélection active et aux prospects chauds.
+ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  color-scheme: light;
+
+  /* Sol et encre */
+  --coton: #f4f6fa;
+  --surface: #ffffff;
+  --surface-2: #eef1f9;
+  --encre: #0f1530;
+  --encre-2: #485277;
+  --encre-3: #5f6890;
+  --filet: #dce2f0;
+  --filet-fort: #c3cce4;
+
+  /* Rail (cuve) */
+  --cuve: #16225c;
+  --cuve-2: #22327a;
+  --cuve-encre: #f2f4fb;
+  --cuve-encre-2: #b8c3e6;
+  /* Ocre lisible sur la cuve (sélection active du rail, anneau de focus) */
+  --ocre-vif: #f0a35a;
+
+  /* Trois bains : délavé, moyen, profond */
+  --bain-1: #a9b8e2;
+  --bain-2: #4a64b0;
+  --bain-3: #16225c;
+
+  /* Réservées */
+  --ocre: #a65b14;
+  --ocre-fond: #fbefe2;
+  --vert: #1e7a4c;
+  --vert-fond: #e5f3eb;
+  --rouge: #b42318;
+  --rouge-fond: #fdecea;
+
+  /* Action principale : la cuve en clair, le bain profond éclairci en sombre */
+  --primaire: #16225c;
+  --primaire-survol: #22327a;
+  --primaire-encre: #f2f4fb;
+
+  --ombre: 0 1px 2px rgb(15 21 48 / 0.06), 0 4px 12px -4px rgb(15 21 48 / 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
+    --coton: #0b1030;
+    --surface: #111840;
+    --surface-2: #17204f;
+    --encre: #e8ecf8;
+    --encre-2: #b3bddf;
+    --encre-3: #98a3cb;
+    --filet: #243069;
+    --filet-fort: #33418a;
+    --cuve: #070b22;
+    --cuve-2: #18235a;
+    --cuve-encre: #eef1fb;
+    --cuve-encre-2: #a4b0da;
+    --bain-1: #34478f;
+    --bain-2: #6d85d8;
+    --bain-3: #c9d4f6;
+    --ocre: #f0a35a;
+    --ocre-fond: #3a2710;
+    --vert: #5fd39a;
+    --vert-fond: #12352a;
+    --rouge: #ff8a7e;
+    --rouge-fond: #3d1714;
+    --primaire: #c9d4f6;
+    --primaire-survol: #e1e7fa;
+    --primaire-encre: #0b1030;
+    --ombre: 0 1px 2px rgb(0 0 0 / 0.3), 0 6px 16px -6px rgb(0 0 0 / 0.45);
   }
 }
 
+@theme inline {
+  --color-coton: var(--coton);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-encre: var(--encre);
+  --color-encre-2: var(--encre-2);
+  --color-encre-3: var(--encre-3);
+  --color-filet: var(--filet);
+  --color-filet-fort: var(--filet-fort);
+  --color-cuve: var(--cuve);
+  --color-cuve-2: var(--cuve-2);
+  --color-cuve-encre: var(--cuve-encre);
+  --color-cuve-encre-2: var(--cuve-encre-2);
+  --color-ocre-vif: var(--ocre-vif);
+  --color-bain-1: var(--bain-1);
+  --color-bain-2: var(--bain-2);
+  --color-bain-3: var(--bain-3);
+  --color-ocre: var(--ocre);
+  --color-ocre-fond: var(--ocre-fond);
+  --color-vert: var(--vert);
+  --color-vert-fond: var(--vert-fond);
+  --color-rouge: var(--rouge);
+  --color-rouge-fond: var(--rouge-fond);
+  --color-primaire: var(--primaire);
+  --color-primaire-survol: var(--primaire-survol);
+  --color-primaire-encre: var(--primaire-encre);
+
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+
+  --shadow-pose: var(--ombre);
+
+  --ease-sortie: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-glisse: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html {
+  background: var(--coton);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--coton);
+  color: var(--encre);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ce que le navigateur dessine porte aussi la teinte. */
+::selection {
+  background: var(--bain-1);
+  color: var(--encre);
+}
+
+* {
+  caret-color: var(--bain-2);
+  scrollbar-color: var(--filet-fort) transparent;
+  scrollbar-width: thin;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ocre);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Le score prend la teinte une fois, au chargement. */
+@keyframes prise-de-teinte {
+  from {
+    color: var(--bain-1);
+    filter: blur(2px);
+  }
+}
+
+.teinte {
+  animation: prise-de-teinte 600ms var(--ease-sortie) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teinte {
+    animation: none;
+  }
 }
